@@ -1,0 +1,616 @@
+/* --- Variáveis (PALETA P&B) --- */
+:root {
+    --black: #000000;
+    --dark-gray: #333333;
+    --white: #FFFFFF;
+    --off-white: #F4F4F4; /* Cinza bem claro para fundos */
+    --border-gray: #E0E0E0;
+}
+
+/* --- Base Setup --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Lato', sans-serif;
+    color: var(--black);
+    background-color: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Classe utilitária para travar o scroll quando menu mobile abrir */
+body.no-scroll {
+    overflow: hidden;
+}
+
+h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; line-height: 1.2; }
+a { text-decoration: none; transition: 0.3s ease; }
+img { max-width: 100%; height: auto; display: block; }
+
+/* --- Utilitários --- */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+.section-padding { padding: 100px 0; }
+
+/* --- ANIMAÇÕES CSS REFINADAS --- */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-bw {
+    0% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(0, 0, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+}
+
+/* Alteração na animação de Reveal */
+.reveal { 
+    opacity: 0; 
+    transform: translateY(50px); 
+    transition: opacity 1.2s cubic-bezier(0.165, 0.84, 0.44, 1), 
+                transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1); 
+    will-change: transform, opacity;
+}
+
+.reveal.active { 
+    opacity: 1; 
+    transform: translateY(0); 
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.25s; }
+.reveal-delay-3 { transition-delay: 0.4s; }
+
+
+/* --- BOTÕES (Estilo Minimalista P&B) --- */
+.btn-cta {
+    display: inline-block;
+    background-color: var(--black);
+    color: var(--white);
+    padding: 16px 40px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 1px solid var(--black);
+    font-weight: 400;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.btn-cta:hover { 
+    background-color: var(--white); 
+    color: var(--black); 
+    transform: translateY(-3px); 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.btn-pulse {
+    animation: pulse-bw 2s infinite;
+}
+
+/* --- NAVBAR INTELIGENTE --- */
+.navbar {
+    position: fixed;
+    top: -100px; /* Começa escondida */
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.98); 
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    transition: top 0.4s ease-in-out;
+}
+
+.navbar.visible { top: 0; }
+
+.nav-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+
+.logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--black);
+    letter-spacing: -1px;
+    z-index: 1002; /* Garante que fique acima do menu overlay */
+}
+
+.nav-menu { display: flex; gap: 30px; align-items: center; }
+
+.nav-menu li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.nav-link { 
+    color: var(--black); 
+    font-weight: 400; 
+    font-size: 0.85rem; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    position: relative; 
+}
+
+.nav-link::after {
+    content: ''; position: absolute; width: 0; height: 1px;
+    bottom: -5px; left: 0; background-color: var(--black); transition: width 0.3s;
+}
+.nav-link:hover::after { width: 100%; }
+
+.nav-btn-highlight {
+    background-color: var(--black);
+    color: var(--white) !important;
+    padding: 10px 25px;
+    border-radius: 50px;
+    transition: transform 0.2s;
+}
+.nav-btn-highlight:hover { transform: scale(1.05); background-color: var(--dark-gray); }
+.nav-btn-highlight::after { display: none; }
+
+/* Mobile Menu Icon */
+.hamburger { display: none; cursor: pointer; z-index: 1002; }
+.bar { display: block; width: 25px; height: 2px; margin: 6px auto; transition: all 0.3s; background-color: var(--black); }
+
+/* --- HERO --- */
+.hero {
+    height: 100vh;
+    /* Filtro escuro para garantir leitura do texto branco */
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--white);
+    position: relative;
+}
+
+/* Botão do Hero específico (Branco transparente) */
+.hero .btn-cta {
+    background-color: transparent;
+    border: 1px solid var(--white);
+    color: var(--white);
+}
+.hero .btn-cta:hover {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.hero-content {
+    opacity: 0;
+    animation: fadeUp 1s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+.hero-content h1 { font-size: 4rem; margin-bottom: 20px; font-weight: 400; letter-spacing: -1px; }
+.hero-content p { font-size: 1.2rem; font-weight: 300; margin-bottom: 40px; letter-spacing: 1px; text-transform: uppercase;}
+
+.scroll-down {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    color: white; animation: fadeUp 2s infinite; font-size: 2rem; opacity: 0.8;
+}
+
+/* --- SEÇÕES --- */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+/* Imagens em P&B por padrão */
+.about-img img { 
+    border-radius: 5px; 
+    filter: grayscale(100%); 
+    transition: filter 0.5s ease;
+}
+.about-img img:hover { filter: grayscale(0%); }
+
+/* Estilização da Seção Serviços */
+.services { 
+    background-color: #f9f9f9; 
+    perspective: 1000px; 
+}
+
+.services-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 40px; 
+    margin-top: 60px;
+}
+
+.service-card {
+    background: #ffffff;
+    padding: 60px 40px;
+    border-radius: 20px; 
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+}
+
+.service-card:hover { 
+    transform: translateY(-12px); 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08); 
+    background: #fff;
+}
+
+.features { background-color: var(--black); color: var(--white); }
+
+.feature-item h3 { color: var(--white); border-bottom: 1px solid #555; display: inline-block; padding-bottom: 5px;}
+
+/* Animação no Ícone ao passar o mouse */
+.icon { 
+    font-size: 2rem; 
+    margin-bottom: 25px; 
+    display: inline-block; 
+    color: #1a1a1a;
+    transition: transform 0.5s ease;
+}
+
+.service-card:hover .icon {
+    transform: scale(1.1) rotate(5deg); 
+}
+
+/* Melhoria na Tipografia */
+.service-card h3 {
+    font-family: 'Playfair Display', serif; 
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.service-card p {
+    color: #666;
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+/* Detalhe de linha decorativa que aparece no hover */
+.service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: #000;
+    transition: all 0.4s ease;
+    transform: translateX(-50%);
+}
+
+.service-card:hover::after {
+    width: 40%; 
+}
+
+/* --- PORTFÓLIO PREMIUM --- */
+
+/* Estilização do Título (Consistência com a seção anterior) */
+#portfolio .section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 50px;
+    position: relative;
+    padding-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+#portfolio .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background-color: var(--black);
+}
+
+/* Grid com mais respiro */
+#portfolio .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsivo */
+    gap: 30px;
+}
+
+/* O Card em si */
+#portfolio .portfolio-item {
+    height: 500px; /* Mais alto para valorizar fotos verticais */
+    border-radius: 20px; /* Bordas arredondadas modernas */
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    background-color: #000; /* Fundo preto para evitar flash branco no carregamento */
+}
+
+/* A Imagem */
+#portfolio .portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.6s ease;
+    filter: grayscale(100%) contrast(1.1); /* P&B com contraste leve */
+    opacity: 0.9;
+}
+
+/* Efeito Hover na Imagem */
+#portfolio .portfolio-item:hover img {
+    transform: scale(1.1); /* Zoom suave */
+    filter: grayscale(0%) contrast(1); /* Volta a cor original */
+    opacity: 1;
+}
+
+/* O Overlay (Camada escura) */
+#portfolio .portfolio-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Degradê cinemático em vez de cor sólida */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%);
+    display: flex;
+    align-items: flex-end; /* Texto vai para baixo */
+    justify-content: center;
+    opacity: 0;
+    padding-bottom: 40px; /* Espaço do fundo */
+    transition: all 0.4s ease;
+    backdrop-filter: blur(0px);
+}
+
+/* Hover no Overlay */
+#portfolio .portfolio-item:hover .portfolio-overlay {
+    opacity: 1;
+    backdrop-filter: blur(2px); /* Leve desfoque no fundo para destacar texto */
+}
+
+/* O Botão/Texto */
+#portfolio .portfolio-overlay span {
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.1); /* Efeito vidro */
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 3px; /* Espaçamento chique entre letras */
+    font-weight: 500;
+    transition: all 0.3s ease;
+    transform: translateY(20px); /* Começa um pouco mais baixo */
+}
+
+/* Animação do botão subindo */
+#portfolio .portfolio-item:hover .portfolio-overlay span {
+    transform: translateY(0);
+    background-color: var(--white);
+    color: var(--black);
+    border-color: var(--white);
+}olio-overlay span { color: white; border: 1px solid white; padding: 10px 20px; border-radius: 30px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;}
+
+.testimonial-card { 
+    background: #fff; padding: 40px; border-radius: 10px; 
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05); border-left: 3px solid var(--black);
+    max-width: 800px; margin: 0 auto;
+}
+
+/* --- FINAL CTA (Estilo Editorial Dark) --- */
+
+.final-cta {
+    background-color: var(--black); /* Mudança para fundo escuro */
+    color: var(--white);
+    padding: 120px 0; /* Mais respiro vertical */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Linha Vertical Elegante */
+.decorative-line {
+    display: block;
+    width: 1px;
+    height: 60px;
+    background-color: var(--white);
+    margin-bottom: 30px;
+    opacity: 0.5;
+}
+
+/* Título Impactante */
+.final-cta h2 {
+    font-size: 3.5rem; /* Fonte bem grande */
+    font-weight: 400;
+    margin-bottom: 25px;
+    line-height: 1.1;
+    letter-spacing: -1px;
+}
+
+.final-cta p {
+    font-size: 1.1rem;
+    color: #cccccc; /* Cinza claro para leitura suave no fundo preto */
+    margin-bottom: 40px;
+    font-weight: 300;
+    line-height: 1.8;
+}
+
+/* Botão Invertido (Branco com texto preto) para destaque máximo */
+.btn-inverted {
+    background-color: var(--white);
+    color: var(--black);
+    border-color: var(--white);
+    padding: 18px 50px; /* Botão um pouco maior */
+    font-weight: 600;
+}
+
+.btn-inverted:hover {
+    background-color: transparent;
+    color: var(--white);
+    border-color: var(--white);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255,255,255,0.1); /* Sombra branca suave (glow) */
+}
+
+/* Texto de escassez abaixo do botão */
+.scarcity-text {
+    font-size: 0.8rem !important; /* Forçando ser menor */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.6;
+    margin-top: 25px !important;
+    margin-bottom: 0 !important;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    
+}
+
+/* --- FOOTER PREMIUM --- */
+
+footer {
+    background-color: var(--black);
+    color: var(--white);
+    padding: 80px 0 30px; /* Mais espaço no topo */
+    border-top: 1px solid #222; /* Divisória muito sutil */
+    font-size: 0.9rem;
+}
+
+/* Grid Layout */
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr; /* A marca ocupa mais espaço */
+    gap: 40px;
+    margin-bottom: 60px;
+    text-align: left; /* Alinhamento à esquerda é mais chique */
+}
+
+/* Coluna da Marca */
+.footer-brand h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    margin-bottom: 5px;
+    letter-spacing: -0.5px;
+    color: var(--white);
+}
+
+.brand-subtitle {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #888;
+}
+
+/* Títulos das Colunas */
+.footer-col h4 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    color: #666; /* Título mais apagado para hierarquia */
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+}
+
+/* Links e Textos */
+.footer-link {
+    display: block; /* Um por linha */
+    color: #ccc;
+    margin-bottom: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 300;
+}
+
+.footer-link:hover {
+    color: var(--white);
+    transform: translateX(5px); /* Movimento sutil para a direita */
+}
+
+.footer-location {
+    display: block;
+    color: #666;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+/* Área inferior (Copyright) */
+.footer-bottom {
+    border-top: 1px solid #222;
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #555;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+/* Responsividade Mobile */
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr; /* Uma coluna só */
+        text-align: center;
+        gap: 50px;
+    }
+
+    .footer-brand { margin-bottom: 20px; }
+    
+    .footer-bottom {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
+/* --- Mobile --- */
+@media (max-width: 768px) {
+    .hero-content h1 { font-size: 2.5rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    
+    .hamburger { display: block; }
+
+    .hamburger.active .bar:nth-child(2) { opacity: 0; }
+    .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+    
+    .nav-menu {
+        position: fixed; 
+        left: -100%; 
+        top: 0;
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center;
+        background-color: var(--white); 
+        width: 100vw; 
+        height: 100vh; 
+        text-align: center; 
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 0;
+        gap: 40px;
+        z-index: 1001; 
+    }
+    .nav-menu.active { left: 0; }
+    
+    .nav-link { font-size: 1.2rem; } 
+    .nav-item { margin: 0; }
+    .final-cta h2 { font-size: 2.5rem; }
+    .final-cta { padding: 80px 0; }
+}
